@@ -1,0 +1,311 @@
+﻿@using WebApplication1.Models;
+@using Syncfusion.EJ2 
+@using Syncfusion.EJ2.Buttons;
+@using System.Drawing;
+@using Syncfusion.EJ2.Inputs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication1</title>
+    <link rel="stylesheet" href="~/css/BootswatchTheme.css" />
+    <!-- Syncfusion ASP.NET Core controls styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/22.1.34/material.css" />
+    <!-- Syncfusion ASP.NET Core controls scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/22.1.34/dist/ej2.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+    <script type="text/x-jsrender" id="popupTemplate">
+
+        <form method="post" action="/Category/SubmitForm">
+
+           <div class="speeddial-form">
+
+             <div class="head">
+                <div class="textEle">Questions</div>
+                <div class="iconEle"><span id="closebtn" class="speeddial-icons  closeicon bi bi-x-lg"></span></div>
+             </div>
+
+             <div class="content custom-font">
+                <textarea style="width:100%;" id="comment" name="comment" ></textarea>                
+                <br>               
+             </div>
+
+             <div class="footer">
+                <button value="Envoyer" type="submit" id="primarybtn" class="e-btn e-info">Envoyer</button>
+             </div>
+
+
+           </div>
+
+       </form>
+             
+     </script>
+
+
+    <script type="text/x-jsrender" id="popupTemplate2">
+
+        <form method="post" action="/Category/SubmitForm2">
+
+           <div class="speeddial-form">
+
+              <div class="head">
+
+                  <div class="textEle">Avis</div>
+                  <div class="iconEle"><span id="closebtn2" class="speeddial-icons  closeicon bi bi-x-lg"></span></div>
+              </div>
+
+              <div class="content custom-font">
+                  
+                <div class="rating-container">
+
+                       <label for="feedback" class="ff">Votre évaluation compte</label>                       
+                       <input type="hidden" name="Feedback" id="ratingValue" />
+                       <br>
+                       <br>
+                       <div id="feedback"  name="Feedback"></div>
+                       
+                </div>
+
+              </div>
+
+              <div class="footer">
+                  <button value="Envoyer" type="submit" id="primarybtn" class="e-btn e-info">Envoyer</button>
+              </div>
+           
+          </div>
+         </form>
+    </script>
+
+    <script>
+        function onCreated1() {
+            var textareaComment = new ej.inputs.TextBox({
+                placeholder: 'Posez-nous votre question',
+                floatLabelType: 'Always'
+            });
+            textareaComment.appendTo('#comment');
+            var speeddial = document.getElementById("Template1").ej2_instances[0];
+            document.getElementById('closebtn').onclick = function () {
+                speeddial.hide();
+            }
+            document.getElementById('primarybtn').onclick = function () {
+                speeddial.hide();
+            }
+        }
+    </script>
+
+    <script>
+        function onCreated2() {        
+            var ratingFeedback = new ej.inputs.Rating({
+                floatLabelType: 'Always',
+                valueChanged: function ( args) {
+                    var ratingValue = args.value;
+                    document.getElementById('ratingValue').value = ratingValue;
+                }
+            });
+            ratingFeedback.appendTo('#feedback');
+
+            var speeddial2 = document.getElementById("Template2").ej2_instances[0];
+            document.getElementById('closebtn2').onclick = function () {
+                speeddial2.hide();
+            };
+            document.getElementById('primarybtn2').onclick = function () {
+                speeddial2.hide();
+            };
+        }
+    </script>
+
+    <style>
+        .ff {
+            
+            
+            font-size:13px;
+            color: gray;
+            text-align: center;
+           
+        }
+        .speed-dial-persistent2 {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+        }
+        .speed-dial-persistent {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .speeddial-template-target {
+            min-height: 310px;
+            width: 60%;
+            margin: 0 auto 35px;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .fab-index {
+            z-index: 500 !important;
+        }
+        .popupSpeedDial.e-speeddial-hidden {
+            display: none;
+        }
+
+        .speeddial-form {
+            width: 250px;
+            border-radius: 25px;
+            box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+            background: #f5f5f5;
+        }
+
+        .speeddial-form .content {
+                padding: 10px 15px 0;
+                background: #f5f5f5;
+        }
+
+        .speeddial-form .head {
+                padding: 10px;
+                border-radius: 50px;
+                background: #f5f5f5;
+                position: relative;
+                
+        }
+
+        .speeddial-form .head .textEle {
+                    font-weight: bold;
+                    width: calc(100% - 25px);
+                    display: inline-block;
+                    font-size: 16px;
+                    text-align: center;
+                    color:gray;
+                    
+        }
+
+        .speeddial-form .head .iconEle {
+                    width: 25px;
+                    display: inline-block;
+        }
+
+        .speeddial-form .closeicon {
+                float: right;
+                cursor: pointer;
+        }
+
+        .speeddial-form .footer {
+                padding: 0 15px 15px;
+        }
+
+        body[class*="dark"] .speeddial-form,
+        body[class*="high"] .speeddial-form {
+            background: #333;
+        }
+
+        .speeddial-form .content .e-float-input {
+            margin-bottom: 15px;
+        }
+
+        .speeddial-form .footer .e-btn {
+            margin: 0 60px;
+            width: 100px;
+        }
+
+        .e-speeddial-li .itemlist {
+            display: inherit;
+            width: 100%;
+            align-items: center;
+            padding: 5px;
+            border-radius: 500px;
+            box-shadow: 0 0 4px;
+            background: #f5f5f5;
+        }
+
+        .e-bigger .e-speeddial-li .itemlist {
+            padding: 10px;
+        }
+
+        .e-speeddial-li .itemlist:hover {
+            background: rgb(224, 224, 224);
+        }
+
+        body[class*="dark"] .e-speeddial-li .itemlist,
+        body[class*="high"] .e-speeddial-li .itemlist {
+            background: #333;
+        }
+
+        body[class*="dark"] .e-speeddial-li .itemlist:hover,
+        body[class*="high"] .e-speeddial-li .itemlist:hover {
+                background: #bfbfbf;
+        }
+        [class^="speeddial-icon-"], [class*= "speeddial-icon-"] {
+            font-family: 'speeddial-icons' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: inherit;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Category" asp-action="Index">Category</a>
+                        </li>                   
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>    
+    <div class="speed-dial-persistent">
+         <div class="speeddial-template-target fab-index" id="target1">
+            @Html.EJS().SpeedDial("Template1").CssClass("e-info").Created("onCreated1").Target("#target1").PopupTemplate("#popupTemplate").OpenIconCss("speeddial-icons bi bi-question-circle-fill").Position(FabPosition.BottomRight).Render()
+         </div>
+    </div>
+
+    <div class="speed-dial-persistent2 ">
+          <div class="speeddial-template-target fab-index" id="target2">
+
+            @Html.EJS().SpeedDial("Template2").CssClass("e-info").Created("onCreated2").Target("#target2").Content("Avis").PopupTemplate("#popupTemplate2").OpenIconCss("speeddial-icons bi bi-pen-fill").Position(FabPosition.BottomLeft).Render()
+              
+          </div>
+    </div>
+ 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Syncfusion Script Manager -->
+    <ejs-scripts></ejs-scripts>
+    <!-- Syncfusion ASP.NET MVC Script Manager -->
+    @Html.EJS().ScriptManager()
+
+</body>
+
+</html>
+
